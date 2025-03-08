@@ -1,4 +1,4 @@
-// Signup form submission
+
 document.getElementById("signup").addEventListener("submit", async function(event) {
     event.preventDefault();
 
@@ -18,7 +18,7 @@ document.getElementById("signup").addEventListener("submit", async function(even
 
     let valid = true;
 
-    // Validate Username
+
     if (username.length < 8) {
         usernameError.textContent = "Username must be at least 8 characters.";
         valid = false;
@@ -36,7 +36,7 @@ document.getElementById("signup").addEventListener("submit", async function(even
         }
     }
 
-    // Validate Password Strength
+
     let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
     if (!passwordRegex.test(password)) {
         passwordError.textContent = "Password must include uppercase, lowercase, and special characters.";
@@ -45,13 +45,13 @@ document.getElementById("signup").addEventListener("submit", async function(even
         passwordCheck.textContent = "✔ Password strength is good.";
     }
 
-    // Check if Password and Confirm Password Match
+
     if (password !== confirmPassword) {
         confirmPasswordError.textContent = "Passwords do not match.";
         valid = false;
     }
 
-    // If all inputs are valid, send data to the server
+
     if (valid) {
         let signupData = { username, password, confirmPassword };
 
@@ -65,11 +65,11 @@ document.getElementById("signup").addEventListener("submit", async function(even
             let data = await response.json();
 
             if (data.success) {
-                // Show success message after successful signup
-                document.getElementById('successMessage').style.display = 'block'; // Show success message
+       
+                document.getElementById('successMessage').style.display = 'block';
                 setTimeout(() => {
-                    window.location.href = "/login.html"; // Redirect to login page or any page you prefer
-                }, 2000); // Redirect after 2 seconds
+                    window.location.href = "/login.html"; 
+                }, 2000); 
             } else {
                 alert("Signup failed: " + data.message);
             }
@@ -80,7 +80,7 @@ document.getElementById("signup").addEventListener("submit", async function(even
     }
 });
 
-// Login form submission
+
 document.getElementById("login").addEventListener("submit", async function(event) {
     event.preventDefault();
 
@@ -95,19 +95,19 @@ document.getElementById("login").addEventListener("submit", async function(event
 
     let valid = true;
 
-    // Validate Username
+    
     if (username.length < 8) {
         usernameError.textContent = "Username must be at least 8 characters.";
         valid = false;
     }
 
-    // Validate Password
+    
     if (password.length < 8) {
         passwordError.textContent = "Password must be at least 8 characters.";
         valid = false;
     }
 
-    // If both inputs are valid, send data to the server for login
+    
     if (valid) {
         let loginData = { username, password };
 
@@ -122,7 +122,7 @@ document.getElementById("login").addEventListener("submit", async function(event
 
             if (data.success) {
                 sessionStorage.setItem("username", username);
-                window.location.href = "dashboard.html"; // You can change this as per your app's needs
+                window.location.href = "dashboard.html"; 
             } else {
                 alert("Login failed: " + data.message);
             }
@@ -133,17 +133,17 @@ document.getElementById("login").addEventListener("submit", async function(event
     }
 });
 
-// Check for saved theme preference when the page loads
+
 function toggleTheme() {
     console.log("Changed");
-    // Toggle the dark mode on body and other elements
+    
     document.body.classList.toggle('dark-mode');
     document.querySelector('.container').classList.toggle('dark-mode');
     document.querySelector('button').classList.toggle('dark-mode');
     document.querySelectorAll('input').forEach(input => input.classList.toggle('dark-mode'));
     document.querySelectorAll('.error').forEach(error => error.classList.toggle('dark-mode'));
 
-    // Change button text based on the mode
+  
     const themeIcon = document.getElementById('theme-toggle');
     if (document.body.classList.contains('dark-mode')) {
         themeIcon.textContent = 'Light Mode';
@@ -151,7 +151,7 @@ function toggleTheme() {
         themeIcon.textContent = 'Dark Mode';
     }
 
-    // Save the theme preference in localStorage
+    
     localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
 }
 
@@ -167,5 +167,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Add event listener for the theme toggle button
+
 document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
