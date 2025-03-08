@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+   <!-- dashboard.html or login.html -->
+<div id="greeting-container">
+    <h1 id="greeting">Hello, <span id="username"></span>!</h1>  <!-- Placeholder for username -->
+</div>
+
+<script>
+    // On page load, check if username is stored in sessionStorage
+    document.addEventListener("DOMContentLoaded", function() {
+        const username = sessionStorage.getItem("username");
+
+        // If username exists, display it in the greeting message
+        if (username) {
+            document.getElementById("username").textContent = username;
+        } else {
+            // If no username is found, you can redirect to login page or show an error
+            window.location.href = "/login2.html"; // Redirect if no username is found
+        }
+    });
+</script>
+
+
+    
+</body>
+</html>

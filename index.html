@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureConnect - Signup/Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Dark/Light Mode Toggle -->
+        <div class="theme">
+            <button id="theme-toggle">Change Mode</button>
+        </div>
+
+        <h2>SecureConnect</h2>
+        
+        <div class="form-container">
+            <!-- Signup Form -->
+            <div class="signup-form">
+                <h3>Signup</h3>
+                <form id="signup">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                    <p class="error" id="usernameError"></p>
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                    <p class="error" id="passwordError"></p>
+                    <div id="passwordcheck"></div>
+
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                    <p class="error" id="confirmPasswordError"></p>
+
+                    <button type="submit">Sign Up</button>
+                </form>
+
+                <div id="successMessage" style="display: none; color: green; font-size: 18px; font-weight: bold;">
+                    Successfully signed up! Redirecting to login...
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div class="login-form">
+                <h3>Login</h3>
+                <form id="login">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" required>
+                    <p class="error" id="loginUsernameError"></p>
+
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                    <p class="error" id="loginPasswordError"></p>
+
+                    <button type="submit">Login</button>
+                </form>
+
+                <div id="loginMessage" style="display: none; color: green; font-size: 18px; font-weight: bold;">
+                    Successfully logged in! Redirecting...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

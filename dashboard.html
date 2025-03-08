@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+   <!-- dashboard.html -->
+   <div id="greeting-container">
+      <h1 id="greeting">Hello, <span id="username"></span>!</h1>  <!-- Placeholder for username -->
+   </div>
+
+   <button id="logoutButton">Logout</button>
+
+<script>
+    // On page load, check if username is stored in sessionStorage
+    document.addEventListener("DOMContentLoaded", function() {
+        const username = sessionStorage.getItem("username");
+
+        // If username exists, display it in the greeting message
+        if (username) {
+            document.getElementById("username").textContent = username;
+        } else {
+            // If no username is found, redirect to the login page
+            window.location.href = "/login.html"; // Redirect if no username is found
+        }
+
+        // Add logout functionality
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            // Clear sessionStorage to log the user out
+            sessionStorage.removeItem("username");
+
+            // Redirect to login page
+            window.location.href = "/login.html";
+        });
+    });
+</script>
+
+</body>
+</html>
