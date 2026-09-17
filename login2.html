@@ -2,31 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <meta http-equiv="refresh" content="0; url=/">
+    <title>Redirecting to SecureConnect Login...</title>
 </head>
 <body>
-   
-<div id="greeting-container">
-    <h1 id="greeting">Hello, <span id="username"></span>!</h1>  
-</div>
-
-<script>
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        const username = sessionStorage.getItem("username");
-
-        
-        if (username) {
-            document.getElementById("username").textContent = username;
-        } else {
-            
-            window.location.href = "/login2.html"; 
-        }
-    });
-</script>
-
-
-    
+    <script>
+        window.location.href = "/";
+    </script>
 </body>
 </html>

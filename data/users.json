@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "username": "alexrivera",
+    "password": "$2b$10$gS2inmi.HvpvLbfxCZGEzu5CrJi2yC62AmIL2QEvcXqPzmQOuwiMC",
+    "created_at": "2026-09-16T16:50:59.251Z"
+  },
+  {
+    "id": 2,
+    "username": "testagent",
+    "password": "$2b$10$QqXLfMt1zbyc.m3vpwGF1.5Vyp1Co.Vp8TcT9TiJJspU8KbEaBVvi",
+    "created_at": "2026-09-16T16:54:30.623Z"
+  },
+  {
+    "id": 3,
+    "username": "test",
+    "password": "$2b$10$4r1zpGzlh.BHzBYoX/tc/.SB.q.z87kcaHEHND7CNFWCDx8MefXby",
+    "created_at": "2026-09-16T16:56:51.227Z"
+  },
+  {
+    "id": 4,
+    "username": "test_adv_1789611195172",
+    "password": "$2b$10$YcOS6zL.UAn..NUvyzDR/ua.mx6sT1eQ/UikPGrOhqgGSW01IpWoO",
+    "display_name": "Advanced User",
+    "bio": "Senior Security Specialist",
+    "avatar_color": "gradient-3",
+    "two_factor_enabled": true,
+    "created_at": "2026-09-17T02:13:15.377Z"
+  }
+]

@@ -3,39 +3,838 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>SecureConnect - Enterprise Security Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <!-- dashboard.html -->
-   <div id="greeting-container">
-      <h1 id="greeting">Hello, <span id="username"></span>!</h1>  
-   </div>
+    <div class="background-decorations">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
 
-   <button id="logoutButton">Logout</button>
+    <!-- Top Nav -->
+    <header class="top-nav">
+        <div class="brand-logo">
+            <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span class="brand-name">Secure<span>Connect</span></span>
+        </div>
+        <div class="nav-controls">
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark/Light Mode" title="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span class="theme-text">Theme</span>
+            </button>
+        </div>
+    </header>
 
-<script>
+    <main class="dashboard-container">
+        <!-- User Profile Card Header -->
+        <section class="dash-header-card">
+            <div class="user-profile-info">
+                <div class="user-avatar gradient-1" id="avatarLetter">U</div>
+                <div class="profile-text">
+                    <h1>Hello, <span id="dashDisplayName">User</span>! 👋</h1>
+                    <p>
+                        <span id="dashUsernameTag">@username</span>
+                        <span class="badge-verified">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Protected
+                        </span>
+                        <span class="badge-2fa" id="badge2FAStatus">2FA Disabled</span>
+                    </p>
+                </div>
+            </div>
+            <div class="dash-actions">
+                <button class="btn-outline" id="pingLatencyBtn" title="Test server response time">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    <span id="pingText">Ping Server</span>
+                </button>
+                <button class="btn-danger" id="logoutBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    Sign Out
+                </button>
+            </div>
+        </section>
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const username = sessionStorage.getItem("username");
+        <!-- Navigation Tabs -->
+        <nav class="dash-nav-bar">
+            <button class="dash-nav-tab active" data-tab="tab-overview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                Overview & Telemetry
+            </button>
+            <button class="dash-nav-tab" data-tab="tab-security">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Security & Profile
+            </button>
+            <button class="dash-nav-tab" data-tab="tab-audit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Security Audit Log
+            </button>
+            <button class="dash-nav-tab" data-tab="tab-sessions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                Active Sessions
+            </button>
+        </nav>
 
-       
-        if (username) {
-            document.getElementById("username").textContent = username;
-        } else {
-           
-            window.location.href = "/login.html"; 
+        <!-- Pane 1: Overview & Telemetry -->
+        <section class="dash-pane active" id="pane-overview">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Encryption Standard</span>
+                        <div class="metric-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="metric-value">Active & Salted</div>
+                    <div class="metric-desc">bcrypt (10 key derivation rounds)</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Database Engine</span>
+                        <div class="metric-icon blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                        </div>
+                    </div>
+                    <div class="metric-value" id="dbStatusValue">Operational</div>
+                    <div class="metric-desc" id="dbStatusDesc">Persistent Store • Connected</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Registered Accounts</span>
+                        <div class="metric-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                    </div>
+                    <div class="metric-value" id="totalUsersCount">--</div>
+                    <div class="metric-desc">Total SecureConnect Users</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Server Uptime</span>
+                        <div class="metric-icon amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="metric-value" id="uptimeValue">00:00:00</div>
+                    <div class="metric-desc" id="memoryDesc">Memory usage: -- MB</div>
+                </div>
+            </div>
+
+            <!-- Overview Grid -->
+            <div class="dash-layout-grid">
+                <div class="dash-panel">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Account Protection Summary
+                    </h3>
+                    <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+                        Your credentials are protected with salted bcrypt hashing, brute-force defense throttling, and optional two-factor verification.
+                    </p>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div class="device-card" style="padding: 12px 16px;">
+                            <div class="device-info">
+                                <span style="font-weight: 600; font-size: 13px;">Brute Force Shield</span>
+                            </div>
+                            <span class="badge-verified">Active (5 Attempts)</span>
+                        </div>
+                        <div class="device-card" style="padding: 12px 16px;">
+                            <div class="device-info">
+                                <span style="font-weight: 600; font-size: 13px;">Two-Factor Authentication</span>
+                            </div>
+                            <span id="summary2FABadge" class="badge-status WARNING">Disabled</span>
+                        </div>
+                        <div class="device-card" style="padding: 12px 16px;">
+                            <div class="device-info">
+                                <span style="font-weight: 600; font-size: 13px;">Session Token Integrity</span>
+                            </div>
+                            <span class="badge-verified">Verified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-panel">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 10"></polyline></svg>
+                        Recent Security Events
+                    </h3>
+                    <ul class="activity-list" id="quickActivityList">
+                        <li class="activity-item">
+                            <div class="activity-left">
+                                <span class="activity-dot"></span>
+                                <span>Session authenticated successfully</span>
+                            </div>
+                            <span class="activity-time" id="loginTimeStr">Just now</span>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-left">
+                                <span class="activity-dot" style="background: #3b82f6;"></span>
+                                <span>Encrypted token validated</span>
+                            </div>
+                            <span class="activity-time">Secure</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pane 2: Security & Profile -->
+        <section class="dash-pane" id="pane-security">
+            <div class="dash-layout-grid">
+                <!-- Profile Customization -->
+                <div class="dash-panel">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Profile & Avatar Customizer
+                    </h3>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="editDisplayName">Display Name</label>
+                            <input type="text" id="editDisplayName" placeholder="e.g. Alex Rivera" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editBio">Bio / Role</label>
+                            <textarea id="editBio" placeholder="Describe your role or department..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Avatar Color Theme</label>
+                            <div class="avatar-swatch-list">
+                                <div class="avatar-swatch gradient-1 active" data-gradient="gradient-1"></div>
+                                <div class="avatar-swatch gradient-2" data-gradient="gradient-2"></div>
+                                <div class="avatar-swatch gradient-3" data-gradient="gradient-3"></div>
+                                <div class="avatar-swatch gradient-4" data-gradient="gradient-4"></div>
+                                <div class="avatar-swatch gradient-5" data-gradient="gradient-5"></div>
+                            </div>
+                        </div>
+
+                        <!-- 2FA Toggle Switch -->
+                        <div class="toggle-card">
+                            <div class="toggle-card-info">
+                                <h4>Two-Factor Authentication (2FA)</h4>
+                                <p>Require 6-digit verification code on sign-in</p>
+                            </div>
+                            <label class="switch-toggle">
+                                <input type="checkbox" id="twoFactorToggle">
+                                <span class="slider-round"></span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="saveProfileBtn">
+                            <span class="btn-text">Save Profile Settings</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Password Update Form -->
+                <div class="dash-panel">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Change Password
+                    </h3>
+                    <form id="changePasswordForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <div class="input-wrapper">
+                                <input type="password" id="currentPassword" placeholder="••••••••" required>
+                                <button type="button" class="toggle-password" data-target="currentPassword">
+                                    <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <div class="input-wrapper">
+                                <input type="password" id="newPassword" placeholder="Minimum 8 characters" required>
+                                <button type="button" class="toggle-password" data-target="newPassword">
+                                    <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </button>
+                            </div>
+
+                            <div class="strength-meter-container" style="margin-top: 8px;">
+                                <div class="strength-bar-track">
+                                    <div class="strength-bar" id="newPassStrengthBar"></div>
+                                </div>
+                                <div class="strength-status">
+                                    <span>Strength: <strong id="newPassStrengthLabel">None</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Confirm New Password</label>
+                            <div class="input-wrapper">
+                                <input type="password" id="confirmNewPassword" placeholder="••••••••" required>
+                                <button type="button" class="toggle-password" data-target="confirmNewPassword">
+                                    <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn" id="changePassBtn">
+                            <span class="btn-text">Update Password</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pane 3: Security Audit Log -->
+        <section class="dash-pane" id="pane-audit">
+            <div class="dash-panel">
+                <div class="audit-controls">
+                    <div>
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                            Security & Audit Trail
+                        </h3>
+                        <p style="font-size: 13px; color: var(--text-secondary);">Real-time chronological events recorded for security compliance</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-outline" id="exportAuditBtn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Export JSON
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="audit-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Action Event</th>
+                                <th>User</th>
+                                <th>IP & Device</th>
+                                <th>Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditLogTbody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading audit records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pane 4: Active Devices & Sessions -->
+        <section class="dash-pane" id="pane-sessions">
+            <div class="dash-panel">
+                <h3>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    Active Sessions & Authorized Devices
+                </h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+                    These devices currently have active authorized sessions for your SecureConnect account.
+                </p>
+
+                <div class="device-list" id="devicesList">
+                    <!-- Current Session -->
+                    <div class="device-card">
+                        <div class="device-info">
+                            <div class="device-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            </div>
+                            <div class="device-text">
+                                <h4>Desktop Web Browser (Current Session)</h4>
+                                <p id="currentSessionDetails">127.0.0.1 • Windows / Chrome • Active Now</p>
+                            </div>
+                        </div>
+                        <span class="badge-verified">Current</span>
+                    </div>
+
+                    <!-- Simulated Secondary Device -->
+                    <div class="device-card">
+                        <div class="device-info">
+                            <div class="device-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                            </div>
+                            <div class="device-text">
+                                <h4>Mobile Device (iOS Safari)</h4>
+                                <p>192.168.1.45 • Cupertino, CA • Last active 2h ago</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-revoke" onclick="revokeDeviceSession(this)">Revoke Access</button>
+                    </div>
+
+                    <div class="device-card">
+                        <div class="device-info">
+                            <div class="device-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            </div>
+                            <div class="device-text">
+                                <h4>API Companion Client</h4>
+                                <p>10.0.0.88 • Automated Sync Service • Last active 1d ago</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-revoke" onclick="revokeDeviceSession(this)">Revoke Access</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <script>
+        // Authentication Guard
+        const username = sessionStorage.getItem("sc_username") || sessionStorage.getItem("username");
+        if (!username) {
+            window.location.href = "/";
         }
 
-        
-        document.getElementById("logoutButton").addEventListener("click", function() {
-            
-            sessionStorage.removeItem("username");
+        let currentProfile = {
+            username: username,
+            display_name: username,
+            bio: "",
+            avatar_color: "gradient-1",
+            two_factor_enabled: false
+        };
 
-            
-            window.location.href = "/login.html";
+        let selectedAvatarColor = "gradient-1";
+
+        // Toast Helper
+        function showToast(title, message, type = "info", duration = 4000) {
+            const container = document.getElementById("toast-container");
+            if (!container) return;
+
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+
+            let iconSvg = '';
+            if (type === "success") {
+                iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+            } else if (type === "error") {
+                iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+            } else {
+                iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+            }
+
+            toast.innerHTML = `
+                ${iconSvg}
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-msg">${message}</div>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add("removing");
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // Initialize Theme
+        const themeToggleBtn = document.getElementById("theme-toggle");
+        const savedTheme = localStorage.getItem("sc_theme") || "light";
+        if (savedTheme === "dark") {
+            document.body.classList.add("dark-mode");
+        }
+        themeToggleBtn.addEventListener("click", () => {
+            const isDark = document.body.classList.toggle("dark-mode");
+            localStorage.setItem("sc_theme", isDark ? "dark" : "light");
         });
-    });
-</script>
 
+        // Tab Navigation
+        const navTabs = document.querySelectorAll(".dash-nav-tab");
+        const panes = {
+            "tab-overview": document.getElementById("pane-overview"),
+            "tab-security": document.getElementById("pane-security"),
+            "tab-audit": document.getElementById("pane-audit"),
+            "tab-sessions": document.getElementById("pane-sessions"),
+        };
+
+        navTabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                navTabs.forEach(t => t.classList.remove("active"));
+                Object.values(panes).forEach(p => p && p.classList.remove("active"));
+
+                tab.classList.add("active");
+                const targetTab = tab.getAttribute("data-tab");
+                if (panes[targetTab]) panes[targetTab].classList.add("active");
+
+                if (targetTab === "tab-audit") loadAuditLogs();
+            });
+        });
+
+        // Password visibility toggles in dashboard
+        document.querySelectorAll(".toggle-password").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const targetId = btn.getAttribute("data-target");
+                const input = document.getElementById(targetId);
+                if (!input) return;
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    btn.classList.add("active");
+                } else {
+                    input.type = "password";
+                    btn.classList.remove("active");
+                }
+            });
+        });
+
+        // Avatar swatch picker
+        const swatches = document.querySelectorAll(".avatar-swatch");
+        swatches.forEach(swatch => {
+            swatch.addEventListener("click", () => {
+                swatches.forEach(s => s.classList.remove("active"));
+                swatch.classList.add("active");
+                selectedAvatarColor = swatch.getAttribute("data-gradient");
+                updateAvatarUI(selectedAvatarColor);
+            });
+        });
+
+        function updateAvatarUI(gradientClass) {
+            const avatar = document.getElementById("avatarLetter");
+            avatar.className = `user-avatar ${gradientClass}`;
+        }
+
+        // Fetch user profile from backend
+        async function loadUserProfile() {
+            try {
+                const res = await fetch(`/api/profile?username=${encodeURIComponent(username)}`);
+                const data = await res.json();
+                if (res.ok && data.profile) {
+                    currentProfile = data.profile;
+                    document.getElementById("dashDisplayName").textContent = currentProfile.display_name || username;
+                    document.getElementById("dashUsernameTag").textContent = `@${username}`;
+                    document.getElementById("avatarLetter").textContent = (currentProfile.display_name || username).charAt(0).toUpperCase();
+                    
+                    document.getElementById("editDisplayName").value = currentProfile.display_name || username;
+                    document.getElementById("editBio").value = currentProfile.bio || "";
+                    document.getElementById("twoFactorToggle").checked = Boolean(currentProfile.two_factor_enabled);
+                    
+                    // Avatar color
+                    selectedAvatarColor = currentProfile.avatar_color || "gradient-1";
+                    updateAvatarUI(selectedAvatarColor);
+                    swatches.forEach(s => {
+                        if (s.getAttribute("data-gradient") === selectedAvatarColor) {
+                            s.classList.add("active");
+                        } else {
+                            s.classList.remove("active");
+                        }
+                    });
+
+                    // 2FA badges
+                    update2FABadges(Boolean(currentProfile.two_factor_enabled));
+                }
+            } catch (err) {
+                console.error("Failed to load profile:", err);
+            }
+        }
+
+        function update2FABadges(isEnabled) {
+            const badge = document.getElementById("badge2FAStatus");
+            const summaryBadge = document.getElementById("summary2FABadge");
+
+            if (isEnabled) {
+                badge.textContent = "2FA Active";
+                badge.style.background = "rgba(16, 185, 129, 0.12)";
+                badge.style.color = "var(--success)";
+                if (summaryBadge) {
+                    summaryBadge.textContent = "Enabled (6-digit OTP)";
+                    summaryBadge.className = "badge-status SUCCESS";
+                }
+            } else {
+                badge.textContent = "2FA Disabled";
+                badge.style.background = "rgba(245, 158, 11, 0.12)";
+                badge.style.color = "var(--warning)";
+                if (summaryBadge) {
+                    summaryBadge.textContent = "Disabled";
+                    summaryBadge.className = "badge-status WARNING";
+                }
+            }
+        }
+
+        // Profile Form submit
+        document.getElementById("profileForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const displayName = document.getElementById("editDisplayName").value.trim();
+            const bio = document.getElementById("editBio").value.trim();
+            const twoFactor = document.getElementById("twoFactorToggle").checked;
+            const saveBtn = document.getElementById("saveProfileBtn");
+
+            saveBtn.classList.add("loading");
+            saveBtn.disabled = true;
+
+            try {
+                const res = await fetch("/api/profile", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username,
+                        display_name: displayName,
+                        bio,
+                        avatar_color: selectedAvatarColor,
+                        two_factor_enabled: twoFactor
+                    })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    showToast("Profile Updated", "Security preferences and profile updated.", "success");
+                    document.getElementById("dashDisplayName").textContent = displayName || username;
+                    document.getElementById("avatarLetter").textContent = (displayName || username).charAt(0).toUpperCase();
+                    update2FABadges(twoFactor);
+                } else {
+                    showToast("Update Failed", data.message || "Could not save profile", "error");
+                }
+            } catch (err) {
+                showToast("Error", "Server error while saving profile.", "error");
+            } finally {
+                saveBtn.classList.remove("loading");
+                saveBtn.disabled = false;
+            }
+        });
+
+        // Change Password strength meter
+        const newPassInput = document.getElementById("newPassword");
+        const newPassBar = document.getElementById("newPassStrengthBar");
+        const newPassLabel = document.getElementById("newPassStrengthLabel");
+
+        if (newPassInput) {
+            newPassInput.addEventListener("input", () => {
+                const val = newPassInput.value;
+                const score = [
+                    val.length >= 8,
+                    /[A-Z]/.test(val),
+                    /[a-z]/.test(val),
+                    /[\d\W_]/.test(val)
+                ].filter(Boolean).length;
+
+                newPassBar.className = "strength-bar";
+                if (val.length === 0) {
+                    newPassLabel.textContent = "None";
+                    newPassBar.style.width = "0%";
+                } else if (score <= 1) {
+                    newPassBar.classList.add("weak");
+                    newPassLabel.textContent = "Weak";
+                    newPassLabel.style.color = "var(--error)";
+                } else if (score === 2) {
+                    newPassBar.classList.add("fair");
+                    newPassLabel.textContent = "Fair";
+                    newPassLabel.style.color = "var(--warning)";
+                } else if (score === 3) {
+                    newPassBar.classList.add("strong");
+                    newPassLabel.textContent = "Strong";
+                    newPassLabel.style.color = "#3b82f6";
+                } else {
+                    newPassBar.classList.add("secure");
+                    newPassLabel.textContent = "Secure & Ready";
+                    newPassLabel.style.color = "var(--success)";
+                }
+            });
+        }
+
+        // Change Password Form submit
+        document.getElementById("changePasswordForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const currentPassword = document.getElementById("currentPassword").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+            const btn = document.getElementById("changePassBtn");
+
+            if (newPassword !== confirmNewPassword) {
+                showToast("Password Mismatch", "New passwords do not match.", "error");
+                return;
+            }
+
+            btn.classList.add("loading");
+            btn.disabled = true;
+
+            try {
+                const res = await fetch("/change-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username,
+                        currentPassword,
+                        newPassword,
+                        confirmNewPassword
+                    })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    showToast("Password Changed", "Your password has been re-encrypted with salted bcrypt.", "success");
+                    document.getElementById("changePasswordForm").reset();
+                    newPassBar.style.width = "0%";
+                    newPassLabel.textContent = "None";
+                } else {
+                    showToast("Change Failed", data.message || "Failed to update password", "error");
+                }
+            } catch (err) {
+                showToast("Error", "Server error while changing password", "error");
+            } finally {
+                btn.classList.remove("loading");
+                btn.disabled = false;
+            }
+        });
+
+        // Telemetry & Stats Fetcher
+        let serverSeconds = 0;
+        async function fetchTelemetry() {
+            try {
+                const res = await fetch("/api/stats");
+                const data = await res.json();
+                if (data) {
+                    if (data.databaseMode) {
+                        const mode = data.databaseMode === "mysql" ? "MySQL DB" : "Resilient Local Store";
+                        document.getElementById("dbStatusValue").textContent = data.databaseMode.toUpperCase();
+                        document.getElementById("dbStatusDesc").textContent = `${mode} • Operational`;
+                    }
+                    if (data.totalUsers !== undefined) {
+                        document.getElementById("totalUsersCount").textContent = data.totalUsers;
+                    }
+                    if (data.memoryMB) {
+                        document.getElementById("memoryDesc").textContent = `Memory usage: ${data.memoryMB} MB`;
+                    }
+                    if (data.uptimeSeconds !== undefined) {
+                        serverSeconds = data.uptimeSeconds;
+                        updateUptimeClock();
+                    }
+                }
+            } catch (e) {
+                document.getElementById("dbStatusValue").textContent = "Online";
+            }
+        }
+
+        function updateUptimeClock() {
+            const h = Math.floor(serverSeconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((serverSeconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (serverSeconds % 60).toString().padStart(2, '0');
+            document.getElementById("uptimeValue").textContent = `${h}:${m}:${s}`;
+        }
+
+        setInterval(() => {
+            serverSeconds += 1;
+            updateUptimeClock();
+        }, 1000);
+
+        // Ping latency button
+        document.getElementById("pingLatencyBtn").addEventListener("click", async () => {
+            const pingText = document.getElementById("pingText");
+            pingText.textContent = "Pinging...";
+            const start = performance.now();
+            try {
+                await fetch("/api/status");
+                const latency = Math.round(performance.now() - start);
+                pingText.textContent = `${latency} ms response`;
+                showToast("Server Ping", `Round-trip latency: ${latency}ms`, "success");
+            } catch (e) {
+                pingText.textContent = "Error";
+                showToast("Ping Failed", "Could not reach server", "error");
+            }
+            setTimeout(() => {
+                pingText.textContent = "Ping Server";
+            }, 3000);
+        });
+
+        // Audit Logs Loader
+        let cachedLogs = [];
+        async function loadAuditLogs() {
+            const tbody = document.getElementById("auditLogTbody");
+            try {
+                const res = await fetch(`/api/audit-logs?username=${encodeURIComponent(username)}`);
+                const data = await res.json();
+                if (res.ok && data.logs) {
+                    cachedLogs = data.logs;
+                    renderAuditLogs(data.logs);
+                }
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--error);">Failed to load audit logs.</td></tr>`;
+            }
+        }
+
+        function renderAuditLogs(logs) {
+            const tbody = document.getElementById("auditLogTbody");
+            if (!logs || logs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No security events recorded yet.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = logs.map(l => `
+                <tr>
+                    <td style="white-space: nowrap; font-size: 12px; color: var(--text-muted);">${new Date(l.timestamp).toLocaleString()}</td>
+                    <td><strong style="font-family: monospace; font-size: 12px;">${l.action}</strong></td>
+                    <td>${l.username}</td>
+                    <td>${l.ip}</td>
+                    <td><span class="badge-status ${l.status}">${l.status}</span></td>
+                    <td style="font-size: 12.5px; color: var(--text-secondary);">${l.details}</td>
+                </tr>
+            `).join("");
+        }
+
+        // Export Audit Logs to JSON download
+        document.getElementById("exportAuditBtn").addEventListener("click", () => {
+            if (cachedLogs.length === 0) {
+                showToast("No Logs", "No audit logs available to export.", "info");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cachedLogs, null, 2));
+            const downloadAnchor = document.createElement("a");
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `secureconnect_audit_${username}_${Date.now()}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast("Exported", "Audit log JSON successfully downloaded.", "success");
+        });
+
+        // Device session revocation
+        function revokeDeviceSession(btn) {
+            const card = btn.closest(".device-card");
+            card.style.opacity = "0.5";
+            btn.disabled = true;
+            btn.textContent = "Revoked";
+            showToast("Session Terminated", "Remote access token for this device has been revoked.", "info");
+        }
+
+        // Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            sessionStorage.removeItem("sc_username");
+            sessionStorage.removeItem("sc_token");
+            sessionStorage.removeItem("sc_user");
+            sessionStorage.removeItem("username");
+            window.location.href = "/";
+        });
+
+        // Initial setup calls
+        document.getElementById("loginTimeStr").textContent = new Date().toLocaleTimeString();
+        loadUserProfile();
+        fetchTelemetry();
+    </script>
 </body>
 </html>

@@ -1,9 +1,10 @@
-CREATE DATABASE IF NOT EXISTS SecureConnect;
-USE SecureConnect;
+-- Database initialization script for SecureConnect
+CREATE DATABASE IF NOT EXISTS secureconnect;
+USE secureconnect;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL, 
+    password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "log_1789611195994_6m1vt",
+    "timestamp": "2026-09-17T02:13:15.994Z",
+    "action": "PASSWORD_CHANGED",
+    "username": "test_adv_1789611195172",
+    "ip": "::1",
+    "userAgent": "Web Browser",
+    "status": "SUCCESS",
+    "details": "Password successfully updated and re-encrypted."
+  },
+  {
+    "id": "log_1789611195607_on9n3",
+    "timestamp": "2026-09-17T02:13:15.607Z",
+    "action": "2FA_VERIFICATION_SUCCESS",
+    "username": "test_adv_1789611195172",
+    "ip": "::1",
+    "userAgent": "Web Browser",
+    "status": "SUCCESS",
+    "details": "Two-Factor authentication code verified. Session established."
+  },
+  {
+    "id": "log_1789611195603_te5aq",
+    "timestamp": "2026-09-17T02:13:15.603Z",
+    "action": "2FA_CHALLENGE_ISSUED",
+    "username": "test_adv_1789611195172",
+    "ip": "::1",
+    "userAgent": "Web Browser",
+    "status": "WARNING",
+    "details": "Password verified; 2FA verification challenge triggered."
+  },
+  {
+    "id": "log_1789611195498_7ikn0",
+    "timestamp": "2026-09-17T02:13:15.498Z",
+    "action": "PROFILE_UPDATED",
+    "username": "test_adv_1789611195172",
+    "ip": "::1",
+    "userAgent": "Web Browser",
+    "status": "SUCCESS",
+    "details": "Profile updated (2FA: Enabled, Display: Advanced User)"
+  },
+  {
+    "id": "log_1789611195492_8q6ez",
+    "timestamp": "2026-09-17T02:13:15.492Z",
+    "action": "USER_LOGIN_SUCCESS",
+    "username": "test_adv_1789611195172",
+    "ip": "::1",
+    "userAgent": "Web Browser",
+    "status": "SUCCESS",
+    "details": "Standard credentials verified. Session established."
+  },
+  {
+    "id": "log_1789611195378_i5nqp",
+    "timestamp": "2026-09-17T02:13:15.378Z",
+    "action": "USER_SIGNUP",
+    "username": "test_adv_1789611195172",
+    "ip": "::1",
+    "userAgent": "Web Browser",
+    "status": "SUCCESS",
+    "details": "User account created with bcrypt salted encryption."
+  }
+]
